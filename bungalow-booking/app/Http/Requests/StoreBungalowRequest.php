@@ -35,6 +35,8 @@ class StoreBungalowRequest extends FormRequest
             'featured' => ['nullable', 'boolean'],
             'check_in_time' => ['nullable', 'date_format:H:i'],
             'check_out_time' => ['nullable', 'date_format:H:i'],
+            'amenity_ids' => ['nullable', 'array'],
+            'amenity_ids.*' => ['integer', 'exists:amenities,id'],
         ];
     }
 

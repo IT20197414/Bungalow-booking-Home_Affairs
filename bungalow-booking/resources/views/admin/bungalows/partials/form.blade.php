@@ -1,6 +1,7 @@
 @php
     $checkInTime = old('check_in_time', $bungalow->check_in_time ? substr($bungalow->check_in_time, 0, 5) : null);
     $checkOutTime = old('check_out_time', $bungalow->check_out_time ? substr($bungalow->check_out_time, 0, 5) : null);
+    $checkedAmenityIds = collect(old('amenity_ids', $selectedAmenityIds ?? []))->map(fn ($id) => (int) $id)->all();
 @endphp
 
 <label>Title
@@ -54,3 +55,17 @@
 <label style="display:flex;align-items:center;gap:8px;font-weight:500">
     <input style="width:auto" type="checkbox" name="featured" value="1" @checked(old('featured', $bungalow->featured))> Featured
 </label>
+
+<div class="stack">
+    <strong>Amenities</strong>
+    <div class="form-grid">
+        @forelse($amenities as $amenity)
+            <label style="display:flex;align-items:center;gap:8px;font-weight:500">
+                <input style="width:auto" type="checkbox" name="amenity_ids[]" value="{{ $amenity->id }}" @checked(in_array($amenity->id, $checkedAmenityIds))>
+                {{ $amenity->name }}
+            </label>
+        @empty
+            <p class="muted">No amenities have been added yet.</p>
+        @endforelse
+    </div>
+</div>

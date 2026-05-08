@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Amenity;
 use App\Models\Bungalow;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -23,6 +24,9 @@ class AdminAccessTest extends TestCase
     public function test_admin_can_create_update_and_delete_bungalows(): void
     {
         $admin = User::factory()->admin()->create();
+        $wifi = Amenity::create(['name' => 'Wi-Fi']);
+        $parking = Amenity::create(['name' => 'Parking']);
+        $bbq = Amenity::create(['name' => 'BBQ Area']);
 
         $createResponse = $this->actingAs($admin)->post(route('admin.bungalows.store'), [
             'title' => 'Lake View Bungalow',
@@ -35,10 +39,12 @@ class AdminAccessTest extends TestCase
             'nightly_rate' => 180,
             'status' => 'available',
             'featured' => '1',
+            'amenity_ids' => [$wifi->id, $parking->id],
         ]);
 
         $createResponse->assertRedirect(route('admin.bungalows.index'));
         $bungalow = Bungalow::where('title', 'Lake View Bungalow')->firstOrFail();
+        $this->assertEqualsCanonicalizing([$wifi->id, $parking->id], $bungalow->amenities()->pluck('amenities.id')->all());
 
         $updateResponse = $this->actingAs($admin)->put(route('admin.bungalows.update', $bungalow), [
             'title' => 'Updated Lake View Bungalow',
@@ -50,6 +56,7 @@ class AdminAccessTest extends TestCase
             'bathrooms' => 3,
             'nightly_rate' => 220,
             'status' => 'available',
+            'amenity_ids' => [$bbq->id],
         ]);
 
         $updateResponse->assertRedirect(route('admin.bungalows.index'));
@@ -58,6 +65,7 @@ class AdminAccessTest extends TestCase
             'title' => 'Updated Lake View Bungalow',
             'capacity' => 8,
         ]);
+        $this->assertEqualsCanonicalizing([$bbq->id], $bungalow->fresh()->amenities()->pluck('amenities.id')->all());
 
         $deleteResponse = $this->actingAs($admin)->delete(route('admin.bungalows.destroy', $bungalow));
 
