@@ -90,6 +90,54 @@ class AdminAccessTest extends TestCase
         Storage::disk('public')->assertMissing($imagePath);
     }
 
+    public function test_admin_can_change_uploaded_bungalow_photos(): void
+    {
+        Storage::fake('public');
+
+        $admin = User::factory()->admin()->create();
+        $bungalow = Bungalow::factory()->create();
+        $firstImage = $bungalow->images()->create([
+            'path' => UploadedFile::fake()->create('front.jpg', 100, 'image/jpeg')->store('bungalows', 'public'),
+            'caption' => 'Front',
+            'is_primary' => true,
+            'sort_order' => 1,
+        ]);
+        $secondImage = $bungalow->images()->create([
+            'path' => UploadedFile::fake()->create('pool.jpg', 100, 'image/jpeg')->store('bungalows', 'public'),
+            'caption' => 'Pool',
+            'is_primary' => false,
+            'sort_order' => 2,
+        ]);
+
+        $response = $this->actingAs($admin)->put(route('admin.bungalows.update', $bungalow), [
+            'title' => $bungalow->title,
+            'description' => $bungalow->description,
+            'address' => $bungalow->address,
+            'city' => $bungalow->city,
+            'capacity' => $bungalow->capacity,
+            'bedrooms' => $bungalow->bedrooms,
+            'bathrooms' => $bungalow->bathrooms,
+            'nightly_rate' => $bungalow->nightly_rate,
+            'status' => $bungalow->status,
+            'primary_image_id' => $secondImage->id,
+            'delete_image_ids' => [$firstImage->id],
+            'photos' => [
+                UploadedFile::fake()->create('garden.png', 100, 'image/png'),
+            ],
+        ]);
+
+        $response->assertRedirect(route('admin.bungalows.index'));
+        $response->assertSessionHasNoErrors();
+        Storage::disk('public')->assertMissing($firstImage->path);
+        Storage::disk('public')->assertExists($secondImage->path);
+        $this->assertDatabaseMissing('bungalow_images', ['id' => $firstImage->id]);
+        $this->assertDatabaseHas('bungalow_images', [
+            'id' => $secondImage->id,
+            'is_primary' => true,
+        ]);
+        $this->assertCount(2, $bungalow->fresh()->images);
+    }
+
     public function test_admin_can_update_bungalow_when_existing_times_include_seconds(): void
     {
         $admin = User::factory()->admin()->create();

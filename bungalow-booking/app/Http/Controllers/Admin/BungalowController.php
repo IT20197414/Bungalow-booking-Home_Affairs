@@ -60,11 +60,16 @@ class BungalowController extends Controller
         $data = $request->validated();
         $amenityIds = $data['amenity_ids'] ?? [];
         $photos = $data['photos'] ?? [];
-        unset($data['amenity_ids'], $data['photos']);
+        $deleteImageIds = $data['delete_image_ids'] ?? [];
+        $primaryImageId = $data['primary_image_id'] ?? null;
+        unset($data['amenity_ids'], $data['photos'], $data['delete_image_ids'], $data['primary_image_id']);
 
         $bungalow->update($data);
         $bungalow->amenities()->sync($amenityIds);
+        $this->deletePhotos($bungalow, $deleteImageIds);
         $this->storePhotos($bungalow, $photos);
+        $this->setPrimaryPhoto($bungalow, $primaryImageId);
+        $this->ensurePrimaryPhoto($bungalow);
 
         return redirect()->route('admin.bungalows.index')->with('status', 'Bungalow updated.');
     }
@@ -99,6 +104,46 @@ class BungalowController extends Controller
                 'is_primary' => ! $hasPrimaryImage && $index === 0,
                 'sort_order' => $nextSortOrder + $index,
             ]);
+        }
+    }
+
+    /**
+     * @param  array<int, int>  $imageIds
+     */
+    private function deletePhotos(Bungalow $bungalow, array $imageIds): void
+    {
+        if ($imageIds === []) {
+            return;
+        }
+
+        $images = $bungalow->images()->whereIn('id', $imageIds)->get();
+
+        foreach ($images as $image) {
+            Storage::disk('public')->delete($image->path);
+            $image->delete();
+        }
+    }
+
+    private function setPrimaryPhoto(Bungalow $bungalow, ?int $imageId): void
+    {
+        if ($imageId === null || ! $bungalow->images()->whereKey($imageId)->exists()) {
+            return;
+        }
+
+        $bungalow->images()->update(['is_primary' => false]);
+        $bungalow->images()->whereKey($imageId)->update(['is_primary' => true]);
+    }
+
+    private function ensurePrimaryPhoto(Bungalow $bungalow): void
+    {
+        if ($bungalow->images()->where('is_primary', true)->exists()) {
+            return;
+        }
+
+        $firstImage = $bungalow->images()->orderBy('sort_order')->first();
+
+        if ($firstImage) {
+            $firstImage->update(['is_primary' => true]);
         }
     }
 }

@@ -39,6 +39,9 @@ class UpdateBungalowRequest extends FormRequest
             'amenity_ids.*' => ['integer', 'exists:amenities,id'],
             'photos' => ['nullable', 'array', 'max:6'],
             'photos.*' => ['file', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'primary_image_id' => ['nullable', 'integer', 'exists:bungalow_images,id'],
+            'delete_image_ids' => ['nullable', 'array'],
+            'delete_image_ids.*' => ['integer', 'exists:bungalow_images,id'],
         ];
     }
 

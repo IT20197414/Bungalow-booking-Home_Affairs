@@ -77,8 +77,15 @@
             @foreach($bungalow->images as $image)
                 <div class="card">
                     <img src="{{ asset('storage/'.$image->path) }}" alt="{{ $image->caption ?? $bungalow->title }}" style="width:100%;height:130px;object-fit:cover;display:block">
-                    <div class="card-body">
-                        <span class="badge">{{ $image->is_primary ? 'Primary photo' : 'Photo' }}</span>
+                    <div class="card-body stack">
+                        <label style="display:flex;align-items:center;gap:8px;font-weight:500">
+                            <input style="width:auto" type="radio" name="primary_image_id" value="{{ $image->id }}" @checked((int) old('primary_image_id', $image->is_primary ? $image->id : 0) === $image->id)>
+                            Primary photo
+                        </label>
+                        <label style="display:flex;align-items:center;gap:8px;font-weight:500;color:var(--accent)">
+                            <input style="width:auto" type="checkbox" name="delete_image_ids[]" value="{{ $image->id }}" @checked(in_array($image->id, array_map('intval', old('delete_image_ids', []))))>
+                            Remove this photo
+                        </label>
                     </div>
                 </div>
             @endforeach
