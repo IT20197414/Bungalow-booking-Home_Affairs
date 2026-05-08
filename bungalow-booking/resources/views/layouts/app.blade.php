@@ -27,6 +27,8 @@
         .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
         .card-body { padding: 18px; }
         .media { min-height: 170px; background: linear-gradient(135deg, #1b6f5c, #e2b842); display: grid; place-items: center; color: white; font-weight: 800; }
+        .media.image { background: #d8dee4; overflow: hidden; }
+        .media.image img { width: 100%; height: 100%; min-height: inherit; object-fit: cover; display: block; }
         .muted { color: var(--muted); }
         .section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
         .section-head h2, h1 { margin: 0; }

@@ -8,7 +8,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form class="stack" method="POST" action="{{ route('admin.bungalows.update', $bungalow) }}">
+            <form class="stack" method="POST" action="{{ route('admin.bungalows.update', $bungalow) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 @include('admin.bungalows.partials.form')

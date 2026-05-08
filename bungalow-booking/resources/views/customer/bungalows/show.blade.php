@@ -10,7 +10,20 @@
 
     <div class="grid" style="grid-template-columns: minmax(0, 1.3fr) minmax(280px, .7fr); align-items:start">
         <section class="stack">
-            <div class="media" style="min-height:320px">{{ $bungalow->city ?? 'Bungalow' }}</div>
+            @if($bungalow->images->isNotEmpty())
+                <div class="media image" style="min-height:320px">
+                    <img src="{{ asset('storage/'.$bungalow->images->first()->path) }}" alt="{{ $bungalow->title }}">
+                </div>
+                @if($bungalow->images->count() > 1)
+                    <div class="form-grid">
+                        @foreach($bungalow->images->skip(1) as $image)
+                            <img src="{{ asset('storage/'.$image->path) }}" alt="{{ $image->caption ?? $bungalow->title }}" style="width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid var(--line)">
+                        @endforeach
+                    </div>
+                @endif
+            @else
+                <div class="media" style="min-height:320px">{{ $bungalow->city ?? 'Bungalow' }}</div>
+            @endif
             <div>
                 <h1>{{ $bungalow->title }}</h1>
                 <p class="muted">{{ $bungalow->address }} {{ $bungalow->city }}</p>

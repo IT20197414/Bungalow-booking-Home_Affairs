@@ -37,6 +37,8 @@ class UpdateBungalowRequest extends FormRequest
             'check_out_time' => ['nullable', 'date_format:H:i'],
             'amenity_ids' => ['nullable', 'array'],
             'amenity_ids.*' => ['integer', 'exists:amenities,id'],
+            'photos' => ['nullable', 'array', 'max:6'],
+            'photos.*' => ['file', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
         ];
     }
 

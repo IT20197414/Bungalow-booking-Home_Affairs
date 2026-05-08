@@ -69,3 +69,23 @@
         @endforelse
     </div>
 </div>
+
+<div class="stack">
+    <strong>Photos</strong>
+    @if($bungalow->exists && $bungalow->images->isNotEmpty())
+        <div class="form-grid">
+            @foreach($bungalow->images as $image)
+                <div class="card">
+                    <img src="{{ asset('storage/'.$image->path) }}" alt="{{ $image->caption ?? $bungalow->title }}" style="width:100%;height:130px;object-fit:cover;display:block">
+                    <div class="card-body">
+                        <span class="badge">{{ $image->is_primary ? 'Primary photo' : 'Photo' }}</span>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
+    <label>Upload photos
+        <input type="file" name="photos[]" accept="image/jpeg,image/png,image/webp" multiple>
+    </label>
+    <p class="muted" style="margin:0">You can upload up to 6 JPG, PNG, or WebP photos at a time.</p>
+</div>

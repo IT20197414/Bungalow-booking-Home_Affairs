@@ -24,7 +24,13 @@
     <div class="grid cards">
         @forelse($bungalows as $bungalow)
             <article class="card">
-                <div class="media">{{ $bungalow->city ?? 'Bungalow' }}</div>
+                @if($bungalow->primaryImage)
+                    <div class="media image">
+                        <img src="{{ asset('storage/'.$bungalow->primaryImage->path) }}" alt="{{ $bungalow->title }}">
+                    </div>
+                @else
+                    <div class="media">{{ $bungalow->city ?? 'Bungalow' }}</div>
+                @endif
                 <div class="card-body stack">
                     <div>
                         <h3>{{ $bungalow->title }}</h3>

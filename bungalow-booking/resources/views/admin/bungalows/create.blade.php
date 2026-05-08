@@ -8,7 +8,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form class="stack" method="POST" action="{{ route('admin.bungalows.store') }}">
+            <form class="stack" method="POST" action="{{ route('admin.bungalows.store') }}" enctype="multipart/form-data">
                 @csrf
                 @include('admin.bungalows.partials.form')
                 <button class="button" type="submit">Create bungalow</button>
