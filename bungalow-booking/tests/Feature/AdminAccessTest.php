@@ -64,4 +64,30 @@ class AdminAccessTest extends TestCase
         $deleteResponse->assertRedirect();
         $this->assertDatabaseMissing('bungalows', ['id' => $bungalow->id]);
     }
+
+    public function test_admin_can_update_bungalow_when_existing_times_include_seconds(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $bungalow = Bungalow::factory()->create([
+            'check_in_time' => '14:00:00',
+            'check_out_time' => '11:00:00',
+        ]);
+
+        $response = $this->actingAs($admin)->put(route('admin.bungalows.update', $bungalow), [
+            'title' => $bungalow->title,
+            'description' => $bungalow->description,
+            'address' => $bungalow->address,
+            'city' => $bungalow->city,
+            'capacity' => $bungalow->capacity,
+            'bedrooms' => $bungalow->bedrooms,
+            'bathrooms' => $bungalow->bathrooms,
+            'nightly_rate' => $bungalow->nightly_rate,
+            'status' => $bungalow->status,
+            'check_in_time' => '14:00:00',
+            'check_out_time' => '11:00:00',
+        ]);
+
+        $response->assertRedirect(route('admin.bungalows.index'));
+        $response->assertSessionHasNoErrors();
+    }
 }

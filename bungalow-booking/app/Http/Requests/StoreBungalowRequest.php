@@ -7,6 +7,14 @@ use Illuminate\Validation\Rule;
 
 class StoreBungalowRequest extends FormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'check_in_time' => $this->normalizeTime($this->input('check_in_time')),
+            'check_out_time' => $this->normalizeTime($this->input('check_out_time')),
+        ]);
+    }
+
     public function authorize(): bool
     {
         return $this->user()?->isAdmin() === true;
@@ -36,5 +44,14 @@ class StoreBungalowRequest extends FormRequest
         $data['featured'] = $this->boolean('featured');
 
         return $data;
+    }
+
+    private function normalizeTime(?string $time): ?string
+    {
+        if ($time === null || trim($time) === '') {
+            return null;
+        }
+
+        return substr($time, 0, 5);
     }
 }

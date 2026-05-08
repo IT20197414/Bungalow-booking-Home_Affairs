@@ -1,3 +1,8 @@
+@php
+    $checkInTime = old('check_in_time', $bungalow->check_in_time ? substr($bungalow->check_in_time, 0, 5) : null);
+    $checkOutTime = old('check_out_time', $bungalow->check_out_time ? substr($bungalow->check_out_time, 0, 5) : null);
+@endphp
+
 <label>Title
     <input name="title" value="{{ old('title', $bungalow->title) }}" required>
 </label>
@@ -39,10 +44,10 @@
         </select>
     </label>
     <label>Check in time
-        <input type="time" name="check_in_time" value="{{ old('check_in_time', $bungalow->check_in_time) }}">
+        <input type="time" name="check_in_time" value="{{ $checkInTime }}">
     </label>
     <label>Check out time
-        <input type="time" name="check_out_time" value="{{ old('check_out_time', $bungalow->check_out_time) }}">
+        <input type="time" name="check_out_time" value="{{ $checkOutTime }}">
     </label>
 </div>
 
