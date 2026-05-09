@@ -35,7 +35,7 @@
                     <div>
                         <h3>{{ $bungalow->title }}</h3>
                         <p class="muted">{{ $bungalow->capacity }} guests · {{ $bungalow->bedrooms }} bedrooms · {{ $bungalow->bathrooms }} bathrooms</p>
-                        <p><strong>LKR {{ number_format((float) $bungalow->nightly_rate, 2) }}</strong> / night</p>
+                        <p class="room-price">LKR {{ number_format((float) $bungalow->nightly_rate, 2) }} <span class="period">/ night</span></p>
                     </div>
                     <div class="actions">
                         @foreach($bungalow->amenities->take(3) as $amenity)

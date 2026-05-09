@@ -35,6 +35,9 @@
         .listing-card .media { min-height: 178px; height: 178px; flex: 0 0 178px; }
         .listing-card .card-body { display: flex; flex: 1; flex-direction: column; }
         .listing-card .button { margin-top: auto; width: 100%; }
+        .room-price { color: var(--ink); font-size: 18px; font-weight: 800; margin: 0; }
+        .room-price .period { color: var(--muted); font-size: 14px; font-weight: 600; }
+        .booking-price { font-size: 28px; line-height: 1.15; }
         .muted { color: var(--muted); }
         .section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
         .section-head h2, h1 { margin: 0; }
