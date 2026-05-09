@@ -35,6 +35,20 @@ class AdminAccessTest extends TestCase
             ->assertDontSee('My Bookings');
     }
 
+    public function test_admin_bungalow_delete_uses_custom_confirmation_modal(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $bungalow = Bungalow::factory()->create(['title' => 'Lake View Bungalow']);
+
+        $this->actingAs($admin)
+            ->get(route('admin.bungalows.index'))
+            ->assertOk()
+            ->assertSee('data-bungalow-title="Lake View Bungalow"', false)
+            ->assertSee('id="deleteBungalowModal"', false)
+            ->assertSee('Delete bungalow')
+            ->assertDontSee('return confirm', false);
+    }
+
     public function test_admin_can_create_update_and_delete_bungalows(): void
     {
         Storage::fake('public');

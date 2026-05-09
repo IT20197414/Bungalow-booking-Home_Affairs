@@ -53,6 +53,13 @@
         .badge { display: inline-flex; align-items: center; padding: 4px 8px; border-radius: 999px; background: #eef2f7; color: #344054; font-size: 12px; font-weight: 700; }
         .actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
         .pagination { margin-top: 18px; }
+        .modal-overlay { align-items: center; background: rgba(23, 32, 38, .56); display: none; inset: 0; justify-content: center; padding: 20px; position: fixed; z-index: 50; }
+        .modal-overlay.is-open { display: flex; }
+        .modal-panel { background: var(--panel); border-radius: 8px; box-shadow: 0 24px 80px rgba(23, 32, 38, .26); max-width: 460px; width: min(100%, 460px); }
+        .modal-header, .modal-body, .modal-actions { padding: 18px; }
+        .modal-header { border-bottom: 1px solid var(--line); }
+        .modal-header h2, .modal-body p { margin: 0; }
+        .modal-actions { border-top: 1px solid var(--line); display: flex; gap: 10px; justify-content: flex-end; }
         @media (max-width: 720px) { .nav-inner, .section-head { align-items: flex-start; flex-direction: column; } .hero { padding-top: 36px; } }
     </style>
 </head>
