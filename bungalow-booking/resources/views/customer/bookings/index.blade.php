@@ -32,7 +32,7 @@
                             </div>
                         </td>
                         <td>{{ $booking->guests }}</td>
-                        <td>${{ $booking->total_amount }}</td>
+                        <td>LKR {{ number_format((float) $booking->total_amount, 2) }}</td>
                         <td><span class="badge">{{ $booking->status }}</span></td>
                         <td><span class="badge">{{ $booking->payment?->status ?? 'pending' }}</span></td>
                         <td>

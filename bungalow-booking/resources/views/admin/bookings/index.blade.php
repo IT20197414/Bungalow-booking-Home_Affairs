@@ -15,7 +15,7 @@
                         <td>{{ $booking->user->name }}</td>
                         <td>{{ $booking->bungalow->title }}</td>
                         <td>{{ $booking->check_in_date->toDateString() }} to {{ $booking->check_out_date->toDateString() }}</td>
-                        <td>${{ $booking->total_amount }}</td>
+                        <td>LKR {{ number_format((float) $booking->total_amount, 2) }}</td>
                         <td><span class="badge">{{ $booking->status }}</span></td>
                         <td><span class="badge">{{ $booking->payment?->status ?? 'pending' }}</span></td>
                         <td>

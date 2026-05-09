@@ -25,7 +25,7 @@ class BookingFactory extends Factory
             'check_in_date' => $checkIn->format('Y-m-d'),
             'check_out_date' => $checkOut->format('Y-m-d'),
             'guests' => fake()->numberBetween(1, 4),
-            'total_amount' => fake()->numberBetween(120, 1200),
+            'total_amount' => fake()->numberBetween(15000, 250000),
             'status' => Booking::STATUS_PENDING,
             'notes' => null,
         ];

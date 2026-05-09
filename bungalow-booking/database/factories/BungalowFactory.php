@@ -22,7 +22,7 @@ class BungalowFactory extends Factory
             'capacity' => fake()->numberBetween(2, 10),
             'bedrooms' => fake()->numberBetween(1, 5),
             'bathrooms' => fake()->numberBetween(1, 4),
-            'nightly_rate' => fake()->numberBetween(80, 450),
+            'nightly_rate' => fake()->numberBetween(15000, 85000),
             'status' => 'available',
             'featured' => fake()->boolean(35),
             'check_in_time' => '14:00',

@@ -41,7 +41,7 @@
 
         <aside class="card">
             <div class="card-body stack">
-                <h2>${{ $bungalow->nightly_rate }} / night</h2>
+                <h2>LKR {{ number_format((float) $bungalow->nightly_rate, 2) }} / night</h2>
                 <div class="stack" style="gap:8px">
                     <strong>Stay policy</strong>
                     <p class="muted" style="margin:0">Check-in: From {{ $checkInTime }}</p>

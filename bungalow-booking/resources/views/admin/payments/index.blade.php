@@ -14,7 +14,7 @@
                     <tr>
                         <td>{{ $payment->booking->bungalow->title }}</td>
                         <td>{{ $payment->booking->user->name }}</td>
-                        <td>${{ $payment->amount }}</td>
+                        <td>LKR {{ number_format((float) $payment->amount, 2) }}</td>
                         <td><span class="badge">{{ $payment->status }}</span></td>
                         <td>{{ $payment->transaction_reference }}</td>
                         <td class="actions">

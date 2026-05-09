@@ -26,7 +26,7 @@
                 <div class="card-body stack">
                     <div>
                         <h3>{{ $bungalow->title }}</h3>
-                        <p class="muted">{{ $bungalow->capacity }} guests · {{ $bungalow->bedrooms }} bedrooms · ${{ $bungalow->nightly_rate }}/night</p>
+                        <p class="muted">{{ $bungalow->capacity }} guests · {{ $bungalow->bedrooms }} bedrooms · LKR {{ number_format((float) $bungalow->nightly_rate, 2) }}/night</p>
                     </div>
                     <a class="button secondary" href="{{ route('bungalows.show', $bungalow) }}">View details</a>
                 </div>

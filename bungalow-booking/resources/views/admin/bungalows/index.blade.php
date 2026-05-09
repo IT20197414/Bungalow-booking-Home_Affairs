@@ -16,7 +16,7 @@
                         <td>{{ $bungalow->title }}</td>
                         <td>{{ $bungalow->city }}</td>
                         <td>{{ $bungalow->capacity }}</td>
-                        <td>${{ $bungalow->nightly_rate }}</td>
+                        <td>LKR {{ number_format((float) $bungalow->nightly_rate, 2) }}</td>
                         <td><span class="badge">{{ $bungalow->status }}</span></td>
                         <td class="actions">
                             <a class="button secondary" href="{{ route('admin.bungalows.edit', $bungalow) }}">Edit</a>

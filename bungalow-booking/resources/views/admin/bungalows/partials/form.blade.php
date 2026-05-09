@@ -31,7 +31,7 @@
     <label>Bathrooms
         <input type="number" min="1" name="bathrooms" value="{{ old('bathrooms', $bungalow->bathrooms) }}" required>
     </label>
-    <label>Nightly rate
+    <label>Nightly rate (LKR)
         <input type="number" min="0" step="0.01" name="nightly_rate" value="{{ old('nightly_rate', $bungalow->nightly_rate) }}" required>
     </label>
 </div>
