@@ -21,6 +21,19 @@
     </label>
 </div>
 
+<div class="stack">
+    <strong>Google Map Location</strong>
+    <div class="form-grid">
+        <label>Latitude
+            <input type="number" step="0.0000001" min="-90" max="90" name="latitude" value="{{ old('latitude', $bungalow->latitude) }}" placeholder="Example: 7.290572">
+        </label>
+        <label>Longitude
+            <input type="number" step="0.0000001" min="-180" max="180" name="longitude" value="{{ old('longitude', $bungalow->longitude) }}" placeholder="Example: 80.633728">
+        </label>
+    </div>
+    <p class="muted" style="margin:0">Add both values to show this bungalow on Google Maps for customers.</p>
+</div>
+
 <div class="form-grid">
     <label>Capacity
         <input type="number" min="1" name="capacity" value="{{ old('capacity', $bungalow->capacity) }}" required>

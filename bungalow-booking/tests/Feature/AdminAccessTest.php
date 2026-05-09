@@ -77,6 +77,21 @@ class AdminAccessTest extends TestCase
         $this->assertSame(1, substr_count($bookingsResponse->getContent(), '<span aria-hidden="true">★</span> New'));
     }
 
+    public function test_customers_can_view_bungalow_google_map_location(): void
+    {
+        $bungalow = Bungalow::factory()->create([
+            'title' => 'Map View Bungalow',
+            'latitude' => '7.290572',
+            'longitude' => '80.633728',
+        ]);
+
+        $this->get(route('bungalows.show', $bungalow))
+            ->assertOk()
+            ->assertSee('Location')
+            ->assertSee('Open in Google Maps')
+            ->assertSee('https://www.google.com/maps?q=7.2905720%2C80.6337280&output=embed', false);
+    }
+
     public function test_admin_can_create_update_and_delete_bungalows(): void
     {
         Storage::fake('public');
@@ -91,6 +106,8 @@ class AdminAccessTest extends TestCase
             'description' => 'A calm lakefront stay.',
             'address' => '12 Lake Road',
             'city' => 'Kandy',
+            'latitude' => '7.290572',
+            'longitude' => '80.633728',
             'capacity' => 6,
             'bedrooms' => 3,
             'bathrooms' => 2,
@@ -116,6 +133,8 @@ class AdminAccessTest extends TestCase
             'description' => 'Updated description.',
             'address' => '12 Lake Road',
             'city' => 'Kandy',
+            'latitude' => '6.927079',
+            'longitude' => '79.861244',
             'capacity' => 8,
             'bedrooms' => 4,
             'bathrooms' => 3,
@@ -133,6 +152,8 @@ class AdminAccessTest extends TestCase
             'title' => 'Updated Lake View Bungalow',
             'capacity' => 8,
         ]);
+        $this->assertSame('6.9270790', $bungalow->fresh()->latitude);
+        $this->assertSame('79.8612440', $bungalow->fresh()->longitude);
         $this->assertEqualsCanonicalizing([$bbq->id], $bungalow->fresh()->amenities()->pluck('amenities.id')->all());
         $this->assertCount(3, $bungalow->fresh()->images);
 

@@ -6,6 +6,8 @@
         $checkOutTime = $bungalow->check_out_time
             ? \Illuminate\Support\Carbon::parse($bungalow->check_out_time)->format('g:i A')
             : 'To be confirmed';
+        $hasMapLocation = $bungalow->latitude !== null && $bungalow->longitude !== null;
+        $mapQuery = $hasMapLocation ? $bungalow->latitude.','.$bungalow->longitude : null;
     @endphp
 
     <div class="grid" style="grid-template-columns: minmax(0, 1.3fr) minmax(280px, .7fr); align-items:start">
@@ -37,6 +39,21 @@
                     <span class="badge">{{ $amenity->name }}</span>
                 @endforeach
             </div>
+            @if($hasMapLocation)
+                <div class="stack">
+                    <div class="section-head" style="margin-bottom:0">
+                        <h2>Location</h2>
+                        <a class="button secondary" href="https://www.google.com/maps/search/?api=1&query={{ urlencode($mapQuery) }}" target="_blank" rel="noopener">Open in Google Maps</a>
+                    </div>
+                    <iframe
+                        class="map-frame"
+                        src="https://www.google.com/maps?q={{ urlencode($mapQuery) }}&output=embed"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="{{ $bungalow->title }} location on Google Maps">
+                    </iframe>
+                </div>
+            @endif
         </section>
 
         <aside class="card">

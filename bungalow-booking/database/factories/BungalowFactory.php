@@ -19,6 +19,8 @@ class BungalowFactory extends Factory
             'description' => fake()->paragraph(),
             'address' => fake()->streetAddress(),
             'city' => fake()->city(),
+            'latitude' => fake()->latitude(5.9, 9.9),
+            'longitude' => fake()->longitude(79.6, 81.9),
             'capacity' => fake()->numberBetween(2, 10),
             'bedrooms' => fake()->numberBetween(1, 5),
             'bathrooms' => fake()->numberBetween(1, 4),

@@ -27,6 +27,8 @@ class StoreBungalowRequest extends FormRequest
             'description' => ['nullable', 'string'],
             'address' => ['nullable', 'string', 'max:255'],
             'city' => ['nullable', 'string', 'max:120'],
+            'latitude' => ['nullable', 'required_with:longitude', 'numeric', 'between:-90,90'],
+            'longitude' => ['nullable', 'required_with:latitude', 'numeric', 'between:-180,180'],
             'capacity' => ['required', 'integer', 'min:1'],
             'bedrooms' => ['required', 'integer', 'min:1'],
             'bathrooms' => ['required', 'integer', 'min:1'],

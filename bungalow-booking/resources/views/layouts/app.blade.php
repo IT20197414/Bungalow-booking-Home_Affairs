@@ -67,6 +67,7 @@
         .modal-header { border-bottom: 1px solid var(--line); }
         .modal-header h2, .modal-body p { margin: 0; }
         .modal-actions { border-top: 1px solid var(--line); display: flex; gap: 10px; justify-content: flex-end; }
+        .map-frame { width: 100%; min-height: 280px; border: 1px solid var(--line); border-radius: 8px; display: block; }
         @media (max-width: 720px) { .nav-inner, .section-head { align-items: flex-start; flex-direction: column; } .hero { padding-top: 36px; } }
     </style>
 </head>
