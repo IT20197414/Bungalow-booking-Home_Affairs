@@ -15,7 +15,7 @@
 
     <div class="grid cards">
         @forelse($featuredBungalows as $bungalow)
-            <article class="card">
+            <article class="card listing-card">
                 @if($bungalow->primaryImage)
                     <div class="media image">
                         <img src="{{ asset('storage/'.$bungalow->primaryImage->path) }}" alt="{{ $bungalow->title }}">
