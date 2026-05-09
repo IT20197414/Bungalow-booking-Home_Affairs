@@ -8,7 +8,7 @@
 
     <form class="card card-body form-grid" method="GET" action="{{ route('bungalows.index') }}">
         <label>City
-            <input name="city" value="{{ request('city') }}" placeholder="Kandy">
+            <input name="city" value="{{ request('city') }}" placeholder="Search by city">
         </label>
         <label>Guests
             <input type="number" min="1" name="guests" value="{{ request('guests') }}">
