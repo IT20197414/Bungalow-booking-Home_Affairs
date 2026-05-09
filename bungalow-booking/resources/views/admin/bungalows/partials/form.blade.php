@@ -23,15 +23,10 @@
 
 <div class="stack">
     <strong>Google Map Location</strong>
-    <div class="form-grid">
-        <label>Latitude
-            <input type="number" step="0.0000001" min="-90" max="90" name="latitude" value="{{ old('latitude', $bungalow->latitude) }}" placeholder="Example: 7.290572">
-        </label>
-        <label>Longitude
-            <input type="number" step="0.0000001" min="-180" max="180" name="longitude" value="{{ old('longitude', $bungalow->longitude) }}" placeholder="Example: 80.633728">
-        </label>
-    </div>
-    <p class="muted" style="margin:0">Add both values to show this bungalow on Google Maps for customers.</p>
+    <label>Google Maps link
+        <input type="url" name="google_maps_url" value="{{ old('google_maps_url', $bungalow->google_maps_url) }}" placeholder="https://maps.google.com/...">
+    </label>
+    <p class="muted" style="margin:0">Paste the bungalow location link copied from Google Maps.</p>
 </div>
 
 <div class="form-grid">

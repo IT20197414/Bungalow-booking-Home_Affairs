@@ -79,17 +79,17 @@ class AdminAccessTest extends TestCase
 
     public function test_customers_can_view_bungalow_google_map_location(): void
     {
+        $mapUrl = 'https://www.google.com/maps/search/?api=1&query=Kandy+Sri+Lanka';
         $bungalow = Bungalow::factory()->create([
             'title' => 'Map View Bungalow',
-            'latitude' => '7.290572',
-            'longitude' => '80.633728',
+            'google_maps_url' => $mapUrl,
         ]);
 
         $this->get(route('bungalows.show', $bungalow))
             ->assertOk()
             ->assertSee('Location')
             ->assertSee('Open in Google Maps')
-            ->assertSee('https://www.google.com/maps?q=7.2905720%2C80.6337280&output=embed', false);
+            ->assertSee($mapUrl);
     }
 
     public function test_admin_can_create_update_and_delete_bungalows(): void
@@ -106,8 +106,7 @@ class AdminAccessTest extends TestCase
             'description' => 'A calm lakefront stay.',
             'address' => '12 Lake Road',
             'city' => 'Kandy',
-            'latitude' => '7.290572',
-            'longitude' => '80.633728',
+            'google_maps_url' => 'https://www.google.com/maps/search/?api=1&query=Kandy',
             'capacity' => 6,
             'bedrooms' => 3,
             'bathrooms' => 2,
@@ -133,8 +132,7 @@ class AdminAccessTest extends TestCase
             'description' => 'Updated description.',
             'address' => '12 Lake Road',
             'city' => 'Kandy',
-            'latitude' => '6.927079',
-            'longitude' => '79.861244',
+            'google_maps_url' => 'https://www.google.com/maps/search/?api=1&query=Colombo',
             'capacity' => 8,
             'bedrooms' => 4,
             'bathrooms' => 3,
@@ -152,8 +150,7 @@ class AdminAccessTest extends TestCase
             'title' => 'Updated Lake View Bungalow',
             'capacity' => 8,
         ]);
-        $this->assertSame('6.9270790', $bungalow->fresh()->latitude);
-        $this->assertSame('79.8612440', $bungalow->fresh()->longitude);
+        $this->assertSame('https://www.google.com/maps/search/?api=1&query=Colombo', $bungalow->fresh()->google_maps_url);
         $this->assertEqualsCanonicalizing([$bbq->id], $bungalow->fresh()->amenities()->pluck('amenities.id')->all());
         $this->assertCount(3, $bungalow->fresh()->images);
 

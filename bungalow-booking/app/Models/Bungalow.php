@@ -14,8 +14,7 @@ class Bungalow extends Model
         'description',
         'address',
         'city',
-        'latitude',
-        'longitude',
+        'google_maps_url',
         'capacity',
         'bedrooms',
         'bathrooms',
@@ -31,8 +30,6 @@ class Bungalow extends Model
         return [
             'featured' => 'boolean',
             'nightly_rate' => 'decimal:2',
-            'latitude' => 'decimal:7',
-            'longitude' => 'decimal:7',
         ];
     }
 

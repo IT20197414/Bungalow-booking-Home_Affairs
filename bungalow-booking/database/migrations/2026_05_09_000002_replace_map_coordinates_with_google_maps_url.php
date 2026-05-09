@@ -1,0 +1,25 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('bungalows', function (Blueprint $table) {
+            $table->text('google_maps_url')->nullable()->after('city');
+            $table->dropColumn(['latitude', 'longitude']);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('bungalows', function (Blueprint $table) {
+            $table->decimal('latitude', 10, 7)->nullable()->after('city');
+            $table->decimal('longitude', 10, 7)->nullable()->after('latitude');
+            $table->dropColumn('google_maps_url');
+        });
+    }
+};
