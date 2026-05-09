@@ -61,10 +61,11 @@
             <div class="nav-links">
                 <a href="{{ route('bungalows.index') }}">Bungalows</a>
                 @auth
-                    <a href="{{ route('customer.bookings.index') }}">My Bookings</a>
-                    <a href="{{ route('customer.profile.show') }}">Profile</a>
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}">Admin</a>
+                    @else
+                        <a href="{{ route('customer.bookings.index') }}">My Bookings</a>
+                        <a href="{{ route('customer.profile.show') }}">Profile</a>
                     @endif
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

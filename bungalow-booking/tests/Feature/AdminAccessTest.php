@@ -23,6 +23,17 @@ class AdminAccessTest extends TestCase
         $this->actingAs($customer)->get(route('admin.dashboard'))->assertForbidden();
     }
 
+    public function test_admin_navigation_does_not_show_customer_booking_link(): void
+    {
+        $admin = User::factory()->admin()->create();
+
+        $this->actingAs($admin)
+            ->get(route('home'))
+            ->assertOk()
+            ->assertSee('Admin')
+            ->assertDontSee('My Bookings');
+    }
+
     public function test_admin_can_create_update_and_delete_bungalows(): void
     {
         Storage::fake('public');
