@@ -56,6 +56,8 @@
         .notice { padding: 12px 14px; border-radius: 6px; background: #eaf7ee; border: 1px solid #b8dfc1; color: #195c35; margin-bottom: 18px; }
         .errors { padding: 12px 14px; border-radius: 6px; background: #fff1f0; border: 1px solid #ffc9c3; color: #9f2f22; margin-bottom: 18px; }
         .badge { display: inline-flex; align-items: center; padding: 4px 8px; border-radius: 999px; background: #eef2f7; color: #344054; font-size: 12px; font-weight: 700; }
+        .new-booking-marker { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 999px; background: #fff4de; border: 1px solid #f4c26b; color: #8a4b00; font-size: 12px; font-weight: 800; line-height: 1; margin-left: 8px; vertical-align: middle; }
+        .attention-row td { background: #fffaf0; }
         .actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
         .pagination { margin-top: 18px; }
         .modal-overlay { align-items: center; background: rgba(23, 32, 38, .56); display: none; inset: 0; justify-content: center; padding: 20px; position: fixed; z-index: 50; }

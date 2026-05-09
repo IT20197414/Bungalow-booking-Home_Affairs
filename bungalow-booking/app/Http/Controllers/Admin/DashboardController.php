@@ -16,6 +16,7 @@ class DashboardController extends Controller
         return view('admin.dashboard', [
             'bungalowCount' => Bungalow::count(),
             'bookingCount' => Booking::count(),
+            'pendingBookingCount' => Booking::where('status', Booking::STATUS_PENDING)->count(),
             'customerCount' => User::where('role', 'customer')->count(),
             'pendingPaymentCount' => Payment::where('status', 'pending')->count(),
             'latestBookings' => Booking::with('user', 'bungalow')->latest()->take(5)->get(),

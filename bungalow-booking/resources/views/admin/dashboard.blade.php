@@ -13,7 +13,7 @@
 
     <div class="grid cards">
         <div class="card"><div class="card-body"><p class="muted">Bungalows</p><h2>{{ $bungalowCount }}</h2></div></div>
-        <div class="card"><div class="card-body"><p class="muted">Bookings</p><h2>{{ $bookingCount }}</h2></div></div>
+        <div class="card"><div class="card-body"><p class="muted">Bookings @if($pendingBookingCount > 0)<span class="new-booking-marker"><span aria-hidden="true">★</span> {{ $pendingBookingCount }} new</span>@endif</p><h2>{{ $bookingCount }}</h2></div></div>
         <div class="card"><div class="card-body"><p class="muted">Customers</p><h2>{{ $customerCount }}</h2></div></div>
         <div class="card"><div class="card-body"><p class="muted">Pending Payments</p><h2>{{ $pendingPaymentCount }}</h2></div></div>
     </div>
@@ -25,9 +25,14 @@
             <thead><tr><th>Customer</th><th>Bungalow</th><th>Dates</th><th>Status</th></tr></thead>
             <tbody>
                 @forelse($latestBookings as $booking)
-                    <tr>
+                    <tr @class(['attention-row' => $booking->status === \App\Models\Booking::STATUS_PENDING])>
                         <td>{{ $booking->user->name }}</td>
-                        <td>{{ $booking->bungalow->title }}</td>
+                        <td>
+                            {{ $booking->bungalow->title }}
+                            @if($booking->status === \App\Models\Booking::STATUS_PENDING)
+                                <span class="new-booking-marker"><span aria-hidden="true">★</span> New</span>
+                            @endif
+                        </td>
                         <td>{{ $booking->check_in_date->toDateString() }} to {{ $booking->check_out_date->toDateString() }}</td>
                         <td><span class="badge">{{ $booking->status }}</span></td>
                     </tr>

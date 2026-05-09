@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Amenity;
+use App\Models\Booking;
 use App\Models\Bungalow;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -47,6 +48,33 @@ class AdminAccessTest extends TestCase
             ->assertSee('id="deleteBungalowModal"', false)
             ->assertSee('Delete bungalow')
             ->assertDontSee('return confirm', false);
+    }
+
+    public function test_pending_bookings_are_starred_for_admin_attention(): void
+    {
+        $admin = User::factory()->admin()->create();
+        Booking::factory()->create([
+            'bungalow_id' => Bungalow::factory()->create(['title' => 'Pending Bungalow'])->id,
+        ]);
+        Booking::factory()->confirmed()->create([
+            'bungalow_id' => Bungalow::factory()->create(['title' => 'Confirmed Bungalow'])->id,
+        ]);
+
+        $this->actingAs($admin)
+            ->get(route('admin.dashboard'))
+            ->assertOk()
+            ->assertSee('1 new')
+            ->assertSee('Pending Bungalow')
+            ->assertSee('<span aria-hidden="true">★</span> New', false);
+
+        $bookingsResponse = $this->actingAs($admin)
+            ->get(route('admin.bookings.index'))
+            ->assertOk()
+            ->assertSee('Pending Bungalow')
+            ->assertSee('Confirmed Bungalow')
+            ->assertSee('<span aria-hidden="true">★</span> New', false);
+
+        $this->assertSame(1, substr_count($bookingsResponse->getContent(), '<span aria-hidden="true">★</span> New'));
     }
 
     public function test_admin_can_create_update_and_delete_bungalows(): void

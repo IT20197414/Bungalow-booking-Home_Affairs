@@ -11,9 +11,14 @@
             <thead><tr><th>Customer</th><th>Bungalow</th><th>Dates</th><th>Total</th><th>Status</th><th>Payment</th><th></th></tr></thead>
             <tbody>
                 @forelse($bookings as $booking)
-                    <tr>
+                    <tr @class(['attention-row' => $booking->status === \App\Models\Booking::STATUS_PENDING])>
                         <td>{{ $booking->user->name }}</td>
-                        <td>{{ $booking->bungalow->title }}</td>
+                        <td>
+                            {{ $booking->bungalow->title }}
+                            @if($booking->status === \App\Models\Booking::STATUS_PENDING)
+                                <span class="new-booking-marker"><span aria-hidden="true">★</span> New</span>
+                            @endif
+                        </td>
                         <td>{{ $booking->check_in_date->toDateString() }} to {{ $booking->check_out_date->toDateString() }}</td>
                         <td>LKR {{ number_format((float) $booking->total_amount, 2) }}</td>
                         <td><span class="badge">{{ $booking->status }}</span></td>
