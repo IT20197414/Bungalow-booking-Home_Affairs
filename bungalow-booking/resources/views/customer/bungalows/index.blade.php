@@ -32,7 +32,7 @@
                     <div class="media">{{ $bungalow->city ?? 'Bungalow' }}</div>
                 @endif
                 <div class="card-body stack">
-                    <div>
+                    <div class="listing-card-copy">
                         <h3>{{ $bungalow->title }}</h3>
                         <p class="muted">{{ $bungalow->capacity }} guests · {{ $bungalow->bedrooms }} bedrooms · {{ $bungalow->bathrooms }} bathrooms</p>
                         <p class="room-price">LKR {{ number_format((float) $bungalow->nightly_rate, 2) }} <span class="period">/ night</span></p>
