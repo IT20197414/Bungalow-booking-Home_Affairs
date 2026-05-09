@@ -20,7 +20,7 @@
                         <td><span class="badge">{{ $bungalow->status }}</span></td>
                         <td class="actions">
                             <a class="button secondary" href="{{ route('admin.bungalows.edit', $bungalow) }}">Edit</a>
-                            <form method="POST" action="{{ route('admin.bungalows.destroy', $bungalow) }}">
+                            <form method="POST" action="{{ route('admin.bungalows.destroy', $bungalow) }}" onsubmit="return confirm('Delete {{ addslashes($bungalow->title) }}? This action cannot be undone.');">
                                 @csrf
                                 @method('DELETE')
                                 <button class="button danger" type="submit">Delete</button>
