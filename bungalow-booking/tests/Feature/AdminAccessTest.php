@@ -31,6 +31,7 @@ class AdminAccessTest extends TestCase
             ->get(route('home'))
             ->assertOk()
             ->assertSee('Admin')
+            ->assertSee('Profile')
             ->assertDontSee('My Bookings');
     }
 

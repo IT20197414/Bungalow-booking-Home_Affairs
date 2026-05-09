@@ -14,7 +14,9 @@
         .nav-inner { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
         .brand { font-weight: 800; letter-spacing: .02em; color: var(--brand); }
         .nav-links { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-        .nav-links a, .link-button { font-size: 14px; color: #334155; border: 0; background: transparent; cursor: pointer; padding: 0; }
+        .nav-links form { display: flex; margin: 0; }
+        .nav-links a, .link-button { display: inline-flex; align-items: center; min-height: 36px; padding: 0 10px; border-radius: 6px; font-size: 14px; line-height: 1; color: #334155; border: 0; background: transparent; cursor: pointer; transition: background-color .15s ease, color .15s ease; }
+        .nav-links a:hover, .link-button:hover { background: #eaf7ee; color: var(--brand); }
         .button { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 16px; border-radius: 6px; border: 1px solid var(--brand); background: var(--brand); color: white; font-weight: 700; cursor: pointer; }
         .button.secondary { background: white; color: var(--brand); }
         .button.danger { background: var(--accent); border-color: var(--accent); }
@@ -63,6 +65,7 @@
                 @auth
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}">Admin</a>
+                        <a href="{{ route('customer.profile.show') }}">Profile</a>
                     @else
                         <a href="{{ route('customer.bookings.index') }}">My Bookings</a>
                         <a href="{{ route('customer.profile.show') }}">Profile</a>
